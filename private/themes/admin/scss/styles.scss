@@ -1,0 +1,19 @@
+$padding6: 6px;
+$padding12: 6px;
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #333;
+$font-color: #EEE;
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.menu {
+  a {
+    display: inline-block;
+    padding: $padding6 $padding12;
+    text-decoration: none;
+    color: $font-color;
+  }
+}

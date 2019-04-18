@@ -1,0 +1,1 @@
+$(function(){alert("hello jishee")}),$(function(){alert("hello scripts")});

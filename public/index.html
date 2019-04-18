@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+</head>
+
+<body>
+    <script>
+        $(function () {
+            function getOrContextId() {
+                return 'room1';
+            }
+            $('#txt').val(window.location);
+            var my_id = undefined;
+            var socket = io(window.location + 'bot');
+            socket.on('detect', function (data) {
+                my_id = "ID:" + data.uuid;
+                socket.emit('context', {
+                    context: getOrContextId(), player_id: my_id,
+                    profile: { context: getOrContextId(), player_id: my_id }
+                });
+                $('ul').append($('<li>').html('Me-' + my_id + ': i connected'));
+            });
+            socket.on('gameplay', function (data) {
+                if (data.text !== undefined) {
+                    if (my_id !== data.player_id)
+                        $('ul').append($('<li>').html('Friend-' + data.player_id + ': ' + data.text));
+                    else
+                        $('ul').append($('<li>').html('Me-' + my_id + ': ' + data.text));
+                }
+            });
+            $('#btn').click(function () {
+                socket.emit('gameplay', {
+                    context: getOrContextId(),
+                    player_id: my_id,
+                    text: $('#txt').val()
+                });
+            });
+        });
+    </script>
+    <input type="text" id="txt">
+    <a id="btn" href="javascript:void(0);">Send</a>
+    <ul>
+        <li></li>
+    </ul>
+</body>
+
+</html>
