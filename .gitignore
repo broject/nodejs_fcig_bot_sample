@@ -1,0 +1,7 @@
+.gitignore
+
+/node_modules
+
+private/sqls/*.temp
+!private/*.html
+private/ignore.html
